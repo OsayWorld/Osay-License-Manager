@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ product.name }} - Product Details
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">{{ product.name }}</h1>
+    <div class="row">
+        <div class="col-md-6">
+            {% if product.image_file %}
+                <img src="{{ url_for('static', filename='uploads/' + product.image_file) }}" class="img-fluid" alt="{{ product.name }}" style="max-height: 400px; object-fit: cover;">
+            {% else %}
+                <p>No image available.</p>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h4>Description</h4>
+            <p>{{ product.description or "No description available." }}</p>
+            <h4>Price: ${{ product.effective_price }}</h4>
+            <p><strong>License Duration:</strong> {{ product.license_duration_days }} days</p>
+            <p><strong>Version:</strong> {{ product.version or "N/A" }}</p>
+            <p><strong>Product Type:</strong> {{ product.product_type }}</p>
+            <p><strong>Platform:</strong> {{ product.platform }}</p>
+            <p><strong>Rating:</strong> {{ product.rating }} / 5</p>
+
+            {% if product.is_discounted %}
+                <p class="text-danger"><strong>Discount:</strong> {{ product.discount_percentage }}%</p>
+            {% endif %}
+
+            {% if product.bundle_products %}
+                <p><strong>Bundled Products:</strong> {{ product.bundle_products }}</p>
+            {% endif %}
+
+            <h4>Download Links:</h4>
+            <ul>
+                {% if product.download_file %}
+                    <li><a href="{{ url_for('general.download_file', filename=product.download_file) }}">Download File</a></li>
+                {% endif %}
+                {% if product.apk_file %}
+                    <li><a href="{{ url_for('general.download_file', filename=product.apk_file) }}">Download APK</a></li>
+                {% endif %}
+                {% if product.online_update_file %}
+                    <li><a href="{{ url_for('general.download_file', filename=product.online_update_file) }}">Download Online Update</a></li>
+                {% endif %}
+                {% if product.offline_update_file %}
+                    <li><a href="{{ url_for('general.download_file', filename=product.offline_update_file) }}">Download Offline Update</a></li>
+                {% endif %}
+                {% if product.script_file %}
+                    <li><a href="{{ url_for('general.download_file', filename=product.script_file) }}">Download Script</a></li>
+                {% endif %}
+                {% if product.remote_start_file %}
+                    <li><a href="{{ url_for('general.download_file', filename=product.remote_start_file) }}">Download Remote Start File</a></li>
+                {% endif %}
+                {% if product.remote_stop_file %}
+                    <li><a href="{{ url_for('general.download_file', filename=product.remote_stop_file) }}">Download Remote Stop File</a></li>
+                {% endif %}
+            </ul>
+
+            <h4>Changelog:</h4>
+            <p>{{ product.changelog or "No changelog available." }}</p>
+
+            <p><strong>Download Count:</strong> {{ product.download_count }}</p>
+
+            {% if product.download_limit %}
+                <p><strong>Download Limit:</strong> {{ product.download_limit }}</p>
+            {% endif %}
+
+            {% if product.remote_control_enabled %}
+                <p><strong>Remote Control Enabled:</strong> Yes</p>
+            {% else %}
+                <p><strong>Remote Control Enabled:</strong> No</p>
+            {% endif %}
+
+            <a href="{{ url_for('general.pricing', product_id=product.id) }}" class="btn btn-primary">Learn More & License</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+<form method="POST" action="{{ url_for('software.new_software_license') }}">
+    <label for="key">License Key</label>
+    <input type="text" name="key" id="key" required>
+
+    <label for="product_name">Product Name</label>
+    <input type="text" name="product_name" id="product_name" required>
+
+    <label for="version">Version</label>
+    <input type="text" name="version" id="version" required>
+
+    <label for="machine_id">Machine ID</label>
+    <input type="text" name="machine_id" id="machine_id">
+
+    <label for="expiry_date">Expiry Date</label>
+    <input type="date" name="expiry_date" id="expiry_date" required>
+
+    <button type="submit">Add Software License</button>
+</form>

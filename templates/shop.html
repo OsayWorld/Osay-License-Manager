@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}
+Shop - Plugins, Scripts, and Licensable Projects
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Shop Our Development Projects</h1>
+    <p class="lead text-center mb-5">Explore our premium plugins, scripts, and licensable projects to enhance your development workflow.</p>
+
+    <!-- Plugins Section -->
+    <h2 class="mb-4">Plugins</h2>
+    <div class="row">
+        {% for product in products %}
+            {% if product.product_type == 'Plugin' %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="{{ url_for('static', filename='uploads/' ~ product.image_file) }}" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description }}</p>
+                        <p class="card-text"><strong>Price: ${{ product.price }}</strong></p>
+                        <a href="{{ url_for('general.pricing', product_id=product.id) }}" class="btn btn-primary">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- Scripts Section -->
+    <h2 class="mb-4 mt-5">Scripts</h2>
+    <div class="row">
+        {% for product in products %}
+            {% if product.product_type == 'Script' %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="{{ url_for('static', filename='uploads/' ~ product.image_file) }}" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description }}</p>
+                        <p class="card-text"><strong>Price: ${{ product.price }}</strong></p>
+                        <a href="{{ url_for('general.pricing', product_id=product.id) }}" class="btn btn-primary">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- Development Projects Section -->
+    <h2 class="mb-4 mt-5">Licensable Development Projects</h2>
+    <div class="row">
+        {% for product in products %}
+            {% if product.product_type == 'Project' %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="{{ url_for('static', filename='uploads/' ~ product.image_file) }}" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description }}</p>
+                        <p class="card-text"><strong>Price: ${{ product.price }}</strong></p>
+                        <a href="{{ url_for('general.pricing', product_id=product.id) }}" class="btn btn-primary">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- Call to Action Section -->
+    <div class="text-center mt-5">
+        <a href="#" class="btn btn-success btn-lg">Explore More Projects</a>
+    </div>
+</div>
+{% endblock %}

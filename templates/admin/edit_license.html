@@ -1,0 +1,43 @@
+{% extends "admin/admin_base.html" %}
+
+{% block content %}
+<h2>Edit License</h2>
+
+<!-- Form for editing an existing license -->
+<form method="POST" action="{{ url_for('admin.edit_license', license_id=license.id) }}">
+    <div class="mb-3">
+        <label for="software_name" class="form-label">Software Name</label>
+        <input type="text" class="form-control" id="software_name" name="software_name" value="{{ license.license_key }}" required disabled>
+    </div>
+    <div class="mb-3">
+        <label for="license_key" class="form-label">License Key</label>
+        <input type="text" class="form-control" id="license_key" name="license_key" value="{{ license.license_key }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="user_id" class="form-label">User</label>
+        <select class="form-select" id="user_id" name="user_id" required>
+            {% for user in users %}
+                <option value="{{ user.id }}" {% if user.id == license.user_id %}selected{% endif %}>
+                    {{ user.username }} (ID: {{ user.id }})
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="expires_at" class="form-label">Expiration Date</label>
+        <input type="date" class="form-control" id="expires_at" name="expires_at" value="{{ license.expires_at.strftime('%Y-%m-%d') }}">
+    </div>
+    <div class="mb-3">
+        <label for="product_id" class="form-label">Product</label>
+        <select class="form-select" id="product_id" name="product_id" required>
+            {% for product in products %}
+                <option value="{{ product.id }}" {% if product.id == license.product_id %}selected{% endif %}>
+                    {{ product.name }} ({{ product.platform }})
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Update License</button>
+</form>
+
+{% endblock %}

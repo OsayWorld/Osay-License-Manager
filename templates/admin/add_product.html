@@ -1,0 +1,128 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block content %}
+<h1>Add New Product</h1>
+<form action="{{ url_for('admin.add_product') }}" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="name" class="form-label">Product Name:</label>
+        <input type="text" class="form-control" name="name" id="name" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="product_type" class="form-label">Product Type:</label>
+        <input type="text" class="form-control" name="product_type" id="product_type" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="price" class="form-label">Price (in USD):</label>
+        <input type="number" class="form-control" name="price" id="price" step="0.01" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="license_duration_days" class="form-label">License Duration (Days):</label>
+        <input type="number" class="form-control" name="license_duration_days" id="license_duration_days" value="365" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="version" class="form-label">Version (Optional):</label>
+        <input type="text" class="form-control" name="version" id="version">
+    </div>
+
+    <div class="mb-3">
+        <label for="category" class="form-label">Category:</label>
+        <select class="form-select" name="category" id="category">
+            {% for key, value in PRODUCT_CATEGORIES.items() %}
+                <option value="{{ key }}">{{ value }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Description:</label>
+        <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="platform" class="form-label">Platform:</label>
+        <input type="text" class="form-control" name="platform" id="platform" value="Windows" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="purchase_link" class="form-label">Purchase Link:</label> <!-- New Field -->
+        <input type="url" class="form-control" name="purchase_link" id="purchase_link" placeholder="Enter purchase link (optional)">
+    </div>
+
+    <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" name="remote_control_enabled" id="remote_control_enabled">
+        <label class="form-check-label" for="remote_control_enabled">Enable Remote Control</label>
+    </div>
+
+    <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" name="is_discounted" id="is_discounted">
+        <label class="form-check-label" for="is_discounted">Discount Active</label>
+    </div>
+
+    <div class="mb-3">
+        <label for="discount_percentage" class="form-label">Discount Percentage (if active):</label>
+        <input type="number" class="form-control" name="discount_percentage" id="discount_percentage" step="0.01" min="0" max="100">
+    </div>
+
+    <div class="mb-3">
+        <label for="bundle_products" class="form-label">Bundled Products (comma-separated):</label>
+        <input type="text" class="form-control" name="bundle_products" id="bundle_products">
+    </div>
+
+    <div class="mb-3">
+        <label for="changelog" class="form-label">Changelog (Optional):</label>
+        <textarea class="form-control" name="changelog" id="changelog" rows="2"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="download_limit" class="form-label">Download Limit (Optional):</label>
+        <input type="number" class="form-control" name="download_limit" id="download_limit" min="0">
+    </div>
+
+    <!-- File Inputs -->
+    <div class="mb-3">
+        <label for="download_file" class="form-label">Download File (Optional):</label>
+        <input type="file" class="form-control" name="download_file" id="download_file" accept=".txt,.pdf,.zip,.apk,.exe">
+    </div>
+
+    <div class="mb-3">
+        <label for="image_file" class="form-label">Image File (Optional):</label>
+        <input type="file" class="form-control" name="image_file" id="image_file" accept=".png,.jpg,.jpeg,.gif">
+    </div>
+
+    <div class="mb-3">
+        <label for="apk_file" class="form-label">APK File (Optional):</label>
+        <input type="file" class="form-control" name="apk_file" id="apk_file" accept=".apk">
+    </div>
+
+    <div class="mb-3">
+        <label for="online_update_file" class="form-label">Online Update File (Optional):</label>
+        <input type="file" class="form-control" name="online_update_file" id="online_update_file" accept=".zip">
+    </div>
+
+    <div class="mb-3">
+        <label for="offline_update_file" class="form-label">Offline Update File (Optional):</label>
+        <input type="file" class="form-control" name="offline_update_file" id="offline_update_file" accept=".zip">
+    </div>
+
+    <div class="mb-3">
+        <label for="script_file" class="form-label">Script File (Optional):</label>
+        <input type="file" class="form-control" name="script_file" id="script_file" accept=".sh,.bat,.cmd,.py">
+    </div>
+
+    <div class="mb-3">
+        <label for="remote_start_file" class="form-label">Remote Start File (Optional):</label>
+        <input type="file" class="form-control" name="remote_start_file" id="remote_start_file" accept=".exe,.bat,.sh">
+    </div>
+
+    <div class="mb-3">
+        <label for="remote_stop_file" class="form-label">Remote Stop File (Optional):</label>
+        <input type="file" class="form-control" name="remote_stop_file" id="remote_stop_file" accept=".exe,.bat,.sh">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Product</button>
+</form>
+{% endblock %}

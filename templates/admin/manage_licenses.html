@@ -1,0 +1,101 @@
+{% extends "admin/admin_base.html" %}
+
+{% block content %}
+<h2>Manage Licenses</h2>
+
+<!-- Form for adding a new license -->
+<form method="POST" action="{{ url_for('admin.manage_licenses') }}">
+    <div class="mb-3">
+        <label for="software_name" class="form-label">Software Name</label>
+        <input type="text" class="form-control" id="software_name" name="software_name" required>
+    </div>
+    <div class="mb-3">
+        <label for="license_key" class="form-label">License Key</label>
+        <div class="input-group">
+            <input type="text" class="form-control" id="license_key" name="license_key" required>
+            <button type="button" class="btn btn-outline-secondary" id="generate_key_btn">Generate Key</button>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="user_id" class="form-label">User</label>
+        <select class="form-select" id="user_id" name="user_id" required>
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.username }} (ID: {{ user.id }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div class="mb-3">
+        <label for="expires_at" class="form-label">Expiration Date</label>
+        <input type="date" class="form-control" id="expires_at" name="expires_at" placeholder="Leave blank for unlimited">
+    </div>
+    <div class="mb-3">
+        <label for="product_id" class="form-label">Product</label>
+        <select class="form-select" id="product_id" name="product_id" required>
+            {% for product in products %}
+                <option value="{{ product.id }}">{{ product.name }} ({{ product.platform }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Add License</button>
+</form>
+
+<hr>
+
+<!-- Table displaying existing licenses -->
+<h3>Existing Licenses</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Software Name</th>
+            <th>License Key (Partial)</th>
+            <th>User</th>
+            <th>Product</th>
+            <th>Expiration Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for license in licenses %}
+        <tr>
+            <td>{{ license.software_name }}</td>
+            <td>{{ license.license_key[:6] }}...{{ license.license_key[-6:] }}</td>
+            <td>
+                <a href="{{ url_for('admin.user_details', user_id=license.user.id) }}">
+                    {{ license.user.username }}
+                </a>
+            </td>
+            <td>{{ license.product.name }} ({{ license.product.platform }})</td>
+            <td>{{ license.expires_at or 'N/A' }}</td>
+            <td>
+                <a href="{{ url_for('admin.edit_license', license_id=license.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <form method="POST" action="{{ url_for('admin.delete_license', license_id=license.id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- JavaScript for generating license key -->
+<script>
+    document.getElementById('generate_key_btn').addEventListener('click', function() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', "{{ url_for('admin.manage_licenses') }}", true); // Call the same route to generate the key
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // Change to form-urlencoded
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); // Set header for AJAX request
+        xhr.send("generate_key=1"); // Indicate key generation
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                document.getElementById('license_key').value = response.license_key; // Set the generated key in the input
+            } else {
+                alert('Error generating license key.');
+            }
+        };
+    });
+</script>
+
+{% endblock %}

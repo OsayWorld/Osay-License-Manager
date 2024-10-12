@@ -1,0 +1,15 @@
+<form method="POST" action="{{ url_for('wordpress.new_wordpress_license') }}">
+    <label for="key">License Key</label>
+    <input type="text" name="key" id="key" required>
+
+    <label for="plugin_slug">Plugin Slug</label>
+    <input type="text" name="plugin_slug" id="plugin_slug" required>
+
+    <label for="api_url">API URL</label>
+    <input type="url" name="api_url" id="api_url" required>
+
+    <label for="expiry_date">Expiry Date</label>
+    <input type="date" name="expiry_date" id="expiry_date" required>
+
+    <button type="submit">Add WordPress License</button>
+</form>

@@ -1,0 +1,67 @@
+{% extends "admin/admin_base.html" %}
+
+{% block content %}
+<h2>User Details: {{ user.username }}</h2>
+
+<h3>Licenses</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Software Name</th>
+            <th>License Key</th>
+            <th>Expiration Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for license in licenses %}
+        <tr>
+            <td>{{ license.software_name }}</td>
+            <td>{{ license.license_key }}</td>
+            <td>{{ license.expires_at or 'N/A' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Cart Items</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart_items %}
+        <tr>
+            <td>{{ item.product_name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.price }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Orders</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Order Date</th>
+            <th>Total</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.order_date }}</td>
+            <td>{{ order.total }}</td>
+            <td>{{ order.status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

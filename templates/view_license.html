@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}License Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="h3 mb-4">License Details for {{ product.name }}</h1>
+
+    <div class="card p-4"> <!-- Added padding to the card -->
+        <div class="card-body">
+            <h5 class="card-title">License Key: <span style="color: #333;">{{ license.license_key }}</span></h5>
+            <p><strong>Hashed License Key:</strong> <span style="color: #333;">{{ license.hashed_license_key }}</span></p>
+            <p><strong>Issued At:</strong> <span style="color: #333;">{{ license.issued_at }}</span></p>
+            <p><strong>Expires At:</strong> <span style="color: #333;">{{ license.expires_at }}</span></p>
+            <p><strong>License Active:</strong> <span style="color: #333;">{{ 'Yes' if license.is_active else 'No' }}</span></p>
+            <p><strong>Suspended:</strong> <span style="color: #333;">{{ 'Yes' if license.is_suspended else 'No' }}</span></p>
+            <p><strong>Validation Token:</strong> <span style="color: #333;">{{ license.validation_token }}</span></p>
+            <p><strong>Machine ID:</strong> <span style="color: #333;">{{ license.machine_id }}</span></p>
+            <p><strong>Activation Limit:</strong> <span style="color: #333;">{{ license.activation_limit }}</span></p>
+            <p><strong>API Key:</strong> <span style="color: #333;">{{ license.api_key }}</span></p>
+            <p><strong>Usage Limit:</strong> <span style="color: #333;">{{ license.usage_limit }}</span></p>
+            <p><strong>Current Usage:</strong> <span style="color: #333;">{{ license.current_usage }}</span></p>
+            <p><strong>Webhook URL:</strong> <span style="color: #333;">{{ license.webhook_url }}</span></p>
+            <p><strong>Subscription ID:</strong> <span style="color: #333;">{{ license.subscription_id }}</span></p>
+            <p><strong>Whitelisted IPs:</strong> <span style="color: #333;">{{ license.whitelisted_ips }}</span></p>
+            <p><strong>Transfer Allowed:</strong> <span style="color: #333;">{{ 'Yes' if license.transfer_allowed else 'No' }}</span></p>
+            <p><strong>Max API Requests per Day:</strong> <span style="color: #333;">{{ license.max_api_requests_per_day }}</span></p>
+        </div>
+    </div>
+
+    
+</div>
+
+<style>
+    body {
+        background-color: #ffffff; /* White background for the page */
+        color: #333; /* Dark gray text color */
+    }
+    .card {
+        background-color: #ffffff; /* White background for card */
+        border-radius: 8px; /* Rounded corners for the card */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    }
+    .card p {
+        margin-bottom: 1rem; /* Space between paragraphs */
+    }
+</style>
+{% endblock %}
+

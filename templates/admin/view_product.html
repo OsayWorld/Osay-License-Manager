@@ -1,0 +1,93 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block content %}
+    <h1>Product Details - {{ product.name }}</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">
+                <strong>Type:</strong> {{ product.product_type }}<br>
+                <strong>Price:</strong> ${{ product.price }}<br>
+                <strong>Platform:</strong> {{ product.platform }}<br>
+                <strong>Purchase Link:</strong> 
+                {% if product.purchase_link %}
+                    <a href="{{ product.purchase_link }}" target="_blank">Purchase Here</a>
+                {% else %}
+                    Not available
+                {% endif %}<br>
+                <strong>Description:</strong> {{ product.description or 'No description provided' }}<br>
+                <strong>License Duration (days):</strong> {{ product.license_duration_days }}<br>
+                <strong>Rating:</strong> {{ product.rating or 'N/A' }}<br>
+                <strong>Category:</strong> {{ product.category }}<br>
+                <strong>Discount:</strong> {% if product.is_discounted %}{{ product.discount_percentage }}%{% else %}No{% endif %}<br>
+                <strong>Download Count:</strong> {{ product.download_count }}<br>
+                <strong>Download Limit:</strong> {{ product.download_limit or 'Unlimited' }}<br>
+                <strong>Version:</strong> {{ product.version or 'N/A' }}<br>
+                <strong>Remote Control Enabled:</strong> {% if product.remote_control_enabled %}Yes{% else %}No{% endif %}<br>
+                <strong>Bundle Products:</strong> {{ product.bundle_products or 'None' }}<br>
+                <strong>Changelog:</strong> {{ product.changelog or 'No changelog available' }}<br>
+
+                <!-- Display uploaded files if available -->
+                <strong>Download File:</strong> 
+                {% if product.download_file %}
+                    <a href="{{ url_for('static', filename='uploads/' + product.download_file) }}">Download</a>
+                {% else %}
+                    Not uploaded
+                {% endif %}<br>
+                
+                <strong>Image File:</strong> 
+                {% if product.image_file %}
+                    <img src="{{ url_for('static', filename='uploads/' + product.image_file) }}" alt="Product Image" style="max-width: 200px;"><br>
+                {% else %}
+                    No image uploaded
+                {% endif %}<br>
+                
+                <strong>APK File:</strong> 
+                {% if product.apk_file %}
+                    <a href="{{ url_for('static', filename='uploads/' + product.apk_file) }}">Download APK</a>
+                {% else %}
+                    Not uploaded
+                {% endif %}<br>
+                
+                <strong>Online Update File:</strong> 
+                {% if product.online_update_file %}
+                    <a href="{{ url_for('static', filename='uploads/' + product.online_update_file) }}">Download Online Update</a>
+                {% else %}
+                    Not uploaded
+                {% endif %}<br>
+                
+                <strong>Offline Update File:</strong> 
+                {% if product.offline_update_file %}
+                    <a href="{{ url_for('static', filename='uploads/' + product.offline_update_file) }}">Download Offline Update</a>
+                {% else %}
+                    Not uploaded
+                {% endif %}<br>
+                
+                <strong>Script File:</strong> 
+                {% if product.script_file %}
+                    <a href="{{ url_for('static', filename='uploads/' + product.script_file) }}">Download Script</a>
+                {% else %}
+                    Not uploaded
+                {% endif %}<br>
+                
+                <strong>Remote Start File:</strong> 
+                {% if product.remote_start_file %}
+                    <a href="{{ url_for('static', filename='uploads/' + product.remote_start_file) }}">Download Remote Start</a>
+                {% else %}
+                    Not uploaded
+                {% endif %}<br>
+                
+                <strong>Remote Stop File:</strong> 
+                {% if product.remote_stop_file %}
+                    <a href="{{ url_for('static', filename='uploads/' + product.remote_stop_file) }}">Download Remote Stop</a>
+                {% else %}
+                    Not uploaded
+                {% endif %}<br>
+            </p>
+            
+            <a href="{{ url_for('admin.edit_product', product_id=product.id) }}" class="btn btn-primary">Edit</a>
+            <a href="{{ url_for('admin.manage_products') }}" class="btn btn-secondary">Back to Products</a>
+        </div>
+    </div>
+{% endblock %}

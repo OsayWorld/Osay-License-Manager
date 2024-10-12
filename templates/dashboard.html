@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+<style>
+    .table {
+        background-color: #1a1a1a;
+        color: #ffffff;
+    }
+    .table th {
+        background-color: #333;
+        color: #ffcc00;
+    }
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #2a2a2a;
+    }
+    .table-striped tbody tr:nth-of-type(even) {
+        background-color: #1f1f1f;
+    }
+</style>
+
+<div class="container mt-4">
+    <h1 class="display-4 mb-4">Welcome, {{ current_user.username }}</h1>
+    <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Logout</a>
+
+    <!-- Section for managing licenses -->
+    <section class="mt-4">
+        <h2 class="h3 mb-4">Your Licenses</h2>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th>License Key</th>
+                    <th>Product</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for license in licenses %}
+                <tr>
+                    <td>{{ license.license_key }}</td>
+                    <td>{{ license.product.name }}</td>
+                    <td>
+                        <a href="{{ url_for('general.view_license', license_id=license.id) }}" class="btn btn-primary">
+                            View License
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% if not licenses %}
+                <tr>
+                    <td colspan="3" class="text-center">No licenses found.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </section>
+</div>
+{% endblock %}
+

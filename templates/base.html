@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Google Font - Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <title>{% block title %}{{ title | default('Software Licensing Platform') }}{% endblock %}</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            background-color: #000; /* Black background */
+            color: #fff; /* White text color for contrast */
+            font-family: 'Outfit', sans-serif; /* Use Outfit font */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background-color: #000;
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar-brand img {
+            max-height: 35px;
+        }
+
+        .nav-link {
+            color: #fff;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-link:hover {
+            color: #ffcc00; /* Yellow on hover */
+        }
+
+        .btn {
+            font-weight: 600;
+            border: none;
+            padding: 0.7rem 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-danger {
+            background-color: #ff4d4d;
+        }
+
+        .btn-danger {
+            padding: 0.6rem 0.6rem; /* Smaller padding */
+            font-size: 0.9rem;      /* Smaller font size */
+        }
+
+        .btn-success {
+            background-color: #28a745;
+        }
+
+        .btn-success.signup-btn {
+            padding: 0.6rem 0.6rem; /* Smaller padding */
+            font-size: 0.9rem;      /* Smaller font size */
+        }
+
+        @media (max-width: 991.98px) {
+            .navbar-nav {
+                text-align: center;
+            }
+            .nav-item {
+                margin-bottom: 10px;
+            }
+        }
+
+        .footer {
+            background-color: #000;
+            color: #fff;
+            width: 100%;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('general.discover') }}">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('general.discover') }}">Discover</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://osayworld.com/shop/">Shop</a>
+                    </li>
+                    
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('general.dashboard') }}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-danger ml-lg-2" href="{{ url_for('auth.logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Alert for messages -->
+    <div class="container mt-3">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-info">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Main content container -->
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center p-4">
+        <div class="container">
+            <p>&copy; 2024 Software Licensing Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+</body>
+</html>

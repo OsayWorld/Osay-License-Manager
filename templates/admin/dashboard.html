@@ -1,0 +1,102 @@
+{% extends "admin/admin_base.html" %}
+
+{% block content %}
+<h2>Admin Dashboard</h2>
+<div class="row">
+    <div class="col-lg-3 col-md-6">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Users</h5>
+                <p class="card-text">{{ total_users }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Licenses</h5>
+                <p class="card-text">{{ total_licenses }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Orders</h5>
+                <p class="card-text">{{ total_orders }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="card text-white bg-danger mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Flagged Fraud Cases</h5>
+                <p class="card-text">{{ flagged_fraud }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3>Recent Users</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Signup Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in recent_users %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.created_at }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Recent Orders</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in recent_orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.order_date }}</td>
+            <td>{{ order.total }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Recent Support Tickets</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Ticket ID</th>
+            <th>Subject</th>
+            <th>Status</th>
+            <th>Date Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ticket in recent_tickets %}
+        <tr>
+            <td>{{ ticket.id }}</td>
+            <td>{{ ticket.subject }}</td>
+            <td>{{ ticket.status }}</td>
+            <td>{{ ticket.created_at }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

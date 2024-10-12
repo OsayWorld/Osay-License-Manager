@@ -1,0 +1,51 @@
+{% extends "admin/admin_base.html" %}
+
+{% block content %}
+<h2>Manage Users</h2>
+<form method="POST" action="{{ url_for('admin.manage_users') }}">
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+    </div>
+    <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="is_admin" name="is_admin">
+        <label class="form-check-label" for="is_admin">Admin</label>
+    </div>
+    <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="is_developer" name="is_developer">
+        <label class="form-check-label" for="is_developer">Developer</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Add User</button>
+</form>
+
+<hr>
+<h3>Existing Users</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Admin</th>
+            <th>Developer</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.is_admin }}</td>
+            <td>{{ user.is_developer }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
